@@ -1,0 +1,43 @@
+{% extends "atividades/atividade_base.html" %}
+
+
+{% block content %}
+
+<table class="table table-borderless">
+   <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Usuario</td>
+            <td>Titulo</td>
+            <td>Data Criação</td>
+            <td>Descrição</td>
+            <td>
+                <a href="{%  url 'atividade_insert' %}" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Add New
+                </a>
+            </td>
+        </tr>
+   </thead>
+    <tbody>
+        {% for atividade in atividade_list %}
+            <tr>
+                <td>{{ atividade.usuario }}</td>
+                <td>{{ atividade.titulo }}</td>
+                <td>{{ atividade.date_create }}</td>
+                <td>{{ atividade.descricao }}</td>
+                <td>
+                    <a href="{% url 'atividade_update' atividade.id %}" class="btn text-secondary px-0">
+                        <i class="far fa-edit fa-lg"></i>
+                    </a>
+                     <form action="{% url 'atividade_delete' atividade.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                         <button type="submit" class="btn">
+                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{%  endblock content %}
